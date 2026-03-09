@@ -276,7 +276,7 @@ def _(s2_data, scene_selector):
 
 @app.cell
 def _(s2_data_slice, utils):
-    def plot_scl(time):
+    def plot_scl():
         data = s2_data_slice.sel(band="scl")
         scl_plot = (
             data
@@ -289,8 +289,8 @@ def _(s2_data_slice, utils):
 
 
 @app.cell
-def _(plot_scl, scene_selector):
-    plot_scl(time=scene_selector.value)
+def _(plot_scl):
+    plot_scl()
     return
 
 
@@ -303,7 +303,7 @@ def _():
 
 @app.cell
 def _(gamma_slider, s2_data_slice):
-    def plot_rgb(time):
+    def plot_rgb():
         data = s2_data_slice ** gamma_slider.value
         data = data.clip(min=0, max=255)
         return data.hvplot.rgb(x="x", y="y", bands="band", aspect=1)
@@ -312,8 +312,8 @@ def _(gamma_slider, s2_data_slice):
 
 
 @app.cell
-def _(plot_rgb, scene_selector):
-    plot_rgb(time=scene_selector.value)
+def _(plot_rgb):
+    plot_rgb()
     return
 
 
@@ -344,6 +344,8 @@ def _():
 @app.cell
 def _(sample_points_file):
     sample_points = gpd.read_file(sample_points_file)
+
+    # (Needs to be in a separate cell to the above for reactivity to work)
     return (sample_points,)
 
 
