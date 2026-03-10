@@ -1,4 +1,4 @@
-# Marimo Intro - EO Analytics
+# Marimo Intro for Earth Observation
 
 An introduction to [marimo](https://marimo.io) for Earth Observation-oriented work.
 
@@ -11,3 +11,5 @@ cd app
 pixi install
 pixi run marimo edit
 ```
+
+The main notebook is `app/intro_eo.py`, and in an independent app-like format at `app/intro_app.py`.
