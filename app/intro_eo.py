@@ -124,26 +124,24 @@ def _():
     return
 
 
-@app.cell
-def _():
-    def find_stac_items(bbox, time_range):
-        catalog = pystac_client.Client.open("https://earth-search.aws.element84.com/v1")
-        search = catalog.search(
-            collections=["sentinel-2-l2a"],
-            bbox=bbox,
-            datetime=time_range,
-        )
+@app.function
+def find_stac_items(bbox, time_range):
+    catalog = pystac_client.Client.open("https://earth-search.aws.element84.com/v1")
+    search = catalog.search(
+        collections=["sentinel-2-l2a"],
+        bbox=bbox,
+        datetime=time_range,
+    )
 
-        items = list(search.item_collection())
-        return items
+    items = list(search.item_collection())
+    return items
 
     # This is a 'reusable' function - it can be imported directly from other Python files.
     # See https://docs.marimo.io/guides/reusing_functions/
-    return (find_stac_items,)
 
 
 @app.cell
-def _(find_stac_items):
+def _():
     # Area of interest (AoI) bounding box
     lat_min, lon_min = 27.706, -15.843
     lat_max, lon_max = 28.203, -15.321
@@ -336,6 +334,9 @@ def _():
 @app.cell
 def _():
     _sample_points_file = "/data/gran_canaria/sample_points.gpkg"
+
+    # If running outside docker:
+    # _sample_points_file = "../data/gran_canaria/sample_points.gpkg"
 
     sample_points_file = mo.watch.file(_sample_points_file)
     return (sample_points_file,)
